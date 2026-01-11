@@ -4,13 +4,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 export default function Home() {
-  const videos = [
+  // Ganti ID di bawah ini dengan ID video YouTube yang Anda inginkan
+const videos = [
     {
-      id: "dQw4w9WgXcQ",
+      id: "D-Q9NRWGh4M", 
       title: "Dampak Kecanduan Game pada Otak",
     },
     {
-      id: "71_9m-j3Jv8",
+      id: "c6mbU6C2src", // Ini adalah ID yang benar untuk video kedua Anda
       title: "Teknik Deep Work & Kontrol Diri",
     }
   ];
@@ -76,7 +77,7 @@ export default function Home() {
       </Head>
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-24 px-4">
+      <section className="bg-linear-to-r from-blue-600 to-indigo-700 text-white py-24 px-4">
         <div className="max-w-7xl mx-auto text-center">
           <motion.h1 
             initial={{ opacity: 0, y: -20 }}
@@ -130,7 +131,7 @@ export default function Home() {
           </div>
           <div className="md:w-1/2 bg-blue-50 p-8 rounded-3xl border-2 border-dashed border-blue-200">
             <p className="italic text-blue-800 text-lg text-center">
-              "Kemenangan terbesar adalah kemenangan atas diri sendiri." 
+              &ldquo;Kemenangan terbesar adalah kemenangan atas diri sendiri.&rdquo; 
               <span className="font-bold mt-2 block">— Plato</span>
             </p>
           </div>
@@ -169,9 +170,9 @@ export default function Home() {
                   <h3 className="text-2xl font-bold mb-3 text-gray-900">{item.judul}</h3>
                   <p className="text-lg leading-relaxed text-gray-700 text-center mb-6">{item.deskripsiSingkat}</p>
                   <Link href={item.linkTo}>
-                    <button className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-8 py-3 rounded-full font-bold shadow-lg hover:from-blue-600 hover:to-indigo-700 transition-all">
+                    <span className="cursor-pointer bg-linear-to-r from-blue-500 to-indigo-600 text-white px-8 py-3 rounded-full font-bold shadow-lg hover:from-blue-600 hover:to-indigo-700 transition-all inline-block">
                       Pelajari Lebih Lanjut
-                    </button>
+                    </span>
                   </Link>
                 </div>
               </motion.div>
@@ -183,11 +184,9 @@ export default function Home() {
       {/* Section Video Edukasi */}
       <section className="py-24 bg-white border-t border-gray-100">
         <div className="max-w-6xl mx-auto px-4">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
-            <div>
-              <h2 className="text-3xl font-black text-gray-900">Tonton Video Edukasi</h2>
-              <p className="text-gray-500 mt-2">Belajar lebih mudah dengan penjelasan visual yang menarik.</p>
-            </div>
+          <div className="mb-12">
+            <h2 className="text-3xl font-black text-gray-900">Tonton Video Edukasi</h2>
+            <p className="text-gray-500 mt-2">Belajar lebih mudah dengan penjelasan visual yang menarik.</p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">
@@ -195,17 +194,17 @@ export default function Home() {
               <motion.div 
                 key={index}
                 whileHover={{ scale: 1.02 }}
-                className="group relative rounded-3xl overflow-hidden shadow-xl bg-slate-900 aspect-video"
+                className="group relative rounded-3xl overflow-hidden shadow-xl bg-black aspect-video"
               >
+                {/* Iframe ini akan memutar video di tempat tanpa pindah halaman */}
                 <iframe 
-                  className="absolute inset-0 w-full h-full opacity-90 group-hover:opacity-100 transition-opacity"
+                  className="absolute inset-0 w-full h-full"
                   src={`https://www.youtube.com/embed/${video.id}`}
                   title={video.title}
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                 ></iframe>
-                <div className="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black/80 to-transparent pointer-events-none">
-                  <p className="text-white font-bold text-lg">{video.title}</p>
-                </div>
               </motion.div>
             ))}
           </div>
