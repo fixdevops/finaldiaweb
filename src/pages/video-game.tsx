@@ -1,5 +1,7 @@
 import Head from 'next/head';
 import { motion } from 'framer-motion';
+import SelfControlQuiz from '../components/SelfControlQuiz';
+import GamingSchedulePlanner from '../components/GamingSchedulePlanner';
 
 const VideoGamePage = () => {
   const recommendedGames = [
@@ -121,6 +123,25 @@ const VideoGamePage = () => {
             </motion.div>
           ))}
         </div>
+      </section>
+
+      {/* --- QUIZ SECTION --- */}
+      <section className="bg-gradient-to-b from-slate-50 to-indigo-50 py-24 px-4 border-t border-slate-200">
+        <div className="max-w-4xl mx-auto text-center mb-16">
+          <span className="text-indigo-600 font-black tracking-widest uppercase text-sm mb-4 block">Self-Assessment</span>
+          <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-6">Seberapa Baik Self-Control Kamu?</h2>
+          <p className="text-xl text-slate-500 leading-relaxed">
+            Main game itu seru, tapi jangan sampai lupa waktu. Yuk, ikuti kuis singkat ini untuk mengetahui tipe gamer seperti apa kamu!
+          </p>
+        </div>
+        <SelfControlQuiz />
+      </section>
+
+
+
+      {/* --- SCHEDULE SECTION --- */}
+      <section className="py-24 px-4 max-w-7xl mx-auto">
+        <GamingSchedulePlanner />
       </section>
 
       {/* --- CTA SECTION --- */}
