@@ -4,14 +4,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 export default function Home() {
-  // Ganti ID di bawah ini dengan ID video YouTube yang Anda inginkan
-const videos = [
+  const videos = [
     {
       id: "D-Q9NRWGh4M", 
       title: "Dampak Kecanduan Game pada Otak",
     },
     {
-      id: "c6mbU6C2src", // Ini adalah ID yang benar untuk video kedua Anda
+      id: "c6mbU6C2src", 
       title: "Teknik Deep Work & Kontrol Diri",
     }
   ];
@@ -113,8 +112,9 @@ const videos = [
                 <span className="text-3xl">🧠</span>
                 <h2 className="text-2xl font-black text-slate-800 uppercase tracking-tight">Pengertian Self-Control</h2>
               </div>
+              {/* FIXED: Menggunakan &quot; untuk tanda kutip */}
               <p className="text-lg text-slate-600 leading-relaxed font-medium italic">
-                "Self-control adalah kemampuan individu untuk <span className="text-indigo-600 font-bold">mengatur, mengendalikan, dan mengarahkan</span> perilaku, emosi, serta keputusan agar sesuai dengan tujuan jangka panjang."
+                &quot;Self-control adalah kemampuan individu untuk <span className="text-indigo-600 font-bold">mengatur, mengendalikan, dan mengarahkan</span> perilaku, emosi, serta keputusan agar sesuai dengan tujuan jangka panjang.&quot;
               </p>
             </div>
 
@@ -126,8 +126,9 @@ const videos = [
                   <span className="text-3xl">🎯</span>
                   <h2 className="text-2xl font-black uppercase tracking-tight">Skill, Bukan Bakat</h2>
                 </div>
+                {/* FIXED: Menggunakan &quot; untuk tanda kutip */}
                 <p className="text-xl font-bold leading-snug mb-6">
-                  Self-control itu bukan bakat, tapi <span className="text-yellow-300">"skill yang bisa dilatih"</span>.
+                  Self-control itu bukan bakat, tapi <span className="text-yellow-300">&quot;skill yang bisa dilatih&quot;</span>.
                 </p>
                 <div className="h-px bg-white/20 w-full mb-6"></div>
                 <p className="text-indigo-100 font-medium">
@@ -196,7 +197,7 @@ const videos = [
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className={`p-6 md:p-10 rounded-[2rem] md:rounded-3xl border-2 shadow-sm ${item.warna}`}
+                className={`p-6 md:p-10 rounded-4xl md:rounded-3xl border-2 shadow-sm ${item.warna}`}
               >
                 <div className="flex flex-col items-center text-center">
                   <div className="mb-6 rounded-2xl overflow-hidden border-4 border-white shadow-lg w-full max-w-sm mx-auto">
@@ -237,7 +238,6 @@ const videos = [
                 whileHover={{ scale: 1.02 }}
                 className="group relative rounded-3xl overflow-hidden shadow-xl bg-black aspect-video"
               >
-                {/* Iframe ini akan memutar video di tempat tanpa pindah halaman */}
                 <iframe 
                   className="absolute inset-0 w-full h-full"
                   src={`https://www.youtube.com/embed/${video.id}`}

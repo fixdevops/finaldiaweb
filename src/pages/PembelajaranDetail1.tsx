@@ -101,7 +101,7 @@ export default function PelajaranPage() {
               <span className="mr-3">🧠</span> Apa yang Terjadi pada Otak?
             </h3>
             <p className="text-gray-600 leading-relaxed text-lg">
-              Saat bermain game secara berlebihan, otak melepaskan dopamin yang memicu rasa senang instan. Namun, paparan terus-menerus membuat reseptor otak tumpul, sehingga kamu butuh waktu bermain lebih lama hanya untuk merasa "normal".
+              Saat bermain game secara berlebihan, otak melepaskan dopamin yang memicu rasa senang instan. Namun, paparan terus-menerus membuat reseptor otak tumpul, sehingga kamu butuh waktu bermain lebih lama hanya untuk merasa &quot;normal&quot;.
             </p>
           </section>
 

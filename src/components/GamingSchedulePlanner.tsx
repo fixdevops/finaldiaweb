@@ -112,6 +112,56 @@ const GamingSchedulePlanner = () => {
       }
   };
 
+  const downloadPDF = async () => {
+    try {
+      const { jsPDF } = await import('jspdf');
+      const doc = new jsPDF();
+      
+      doc.setFontSize(22);
+      doc.text("Jadwal Gamer Produktif", 105, 20, { align: 'center' });
+      
+      doc.setFontSize(14);
+      doc.text(`Tipe Jadwal: ${activeTab === 'school' ? 'Hari Sekolah' : 'Hari Libur'}`, 20, 35);
+      
+      doc.setFontSize(12);
+      let y = 50;
+      
+      currentSchedule.forEach((item) => {
+        if (y > 270) {
+          doc.addPage();
+          y = 20;
+        }
+        
+        doc.setFont('helvetica', 'bold');
+        doc.text(`${item.time} - ${item.activity}`, 20, y);
+        y += 7;
+        
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(10);
+        doc.text(`Kategori: ${item.category}`, 25, y);
+        y += 5;
+        
+        if (item.tip) {
+          doc.text(`Tips: ${item.tip}`, 25, y);
+          y += 5;
+        }
+        
+        y += 5; // Spasi antar item
+      });
+      
+      doc.setProperties({
+        title: "Jadwal Gamer Produktif",
+        subject: "Gaming Schedule",
+        author: "DiaWeb"
+      });
+      
+      doc.save(`Jadwal_Gaming_${activeTab}.pdf`);
+    } catch (error) {
+      console.error("Failed to download PDF:", error);
+      alert("Gagal mengunduh PDF. Pastikan library jspdf sudah terinstall.");
+    }
+  };
+
   return (
     <div className="w-full max-w-5xl mx-auto">
       {/* Header Controls */}
@@ -209,7 +259,7 @@ const GamingSchedulePlanner = () => {
               {item.tip && (
                 <div className="mt-auto pt-4 border-t border-black/5">
                   <p className="text-sm font-medium italic opacity-90">
-                    💡 "{item.tip}"
+                    💡 &quot;{item.tip}&quot;
                   </p>
                 </div>
               )}
@@ -231,7 +281,10 @@ const GamingSchedulePlanner = () => {
             </p>
           </div>
         </div>
-        <button className="bg-white text-slate-900 px-8 py-3 rounded-xl font-bold hover:bg-purple-50 transition-colors w-full md:w-auto">
+        <button 
+          onClick={downloadPDF}
+          className="bg-white text-slate-900 px-8 py-3 rounded-xl font-bold hover:bg-purple-50 transition-colors w-full md:w-auto"
+        >
           Download Jadwal PDF
         </button>
       </div>

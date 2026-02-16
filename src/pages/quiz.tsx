@@ -1,14 +1,8 @@
-// @ts-ignore
-import { useState, useEffect, useRef } from 'react';
-// @ts-ignore
+import { useState, useEffect, useRef, useCallback } from 'react';
 import Head from 'next/head';
-// @ts-ignore
 import Link from 'next/link';
-// @ts-ignore
 import { motion, AnimatePresence } from 'framer-motion';
-// @ts-ignore
 import confetti from 'canvas-confetti';
-// @ts-ignore
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -22,16 +16,15 @@ import {
   LineElement,
   Filler,
 } from 'chart.js';
-// @ts-ignore
 import dynamic from 'next/dynamic';
+import { ChartProps } from 'react-chartjs-2';
 
-// Dynamically import Chart component and cast to any to fix type errors
-const Bar = dynamic(() => import('react-chartjs-2').then((mod) => mod.Bar), { 
+// Dynamically import Chart component
+const Bar = dynamic<ChartProps<"bar">>(() => import('react-chartjs-2').then((mod) => mod.Bar), { 
   ssr: false,
   loading: () => <div className="h-48 flex items-center justify-center text-slate-500 bg-slate-900/20 rounded-xl">Memuat Grafik...</div>
-}) as any;
+});
 
-// @ts-ignore
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -150,16 +143,16 @@ export default function QuizPage() {
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
   const resultRef = useRef<HTMLDivElement>(null);
 
-  const calculateTotalScore = () => {
+  const calculateTotalScore = useCallback(() => {
     return answers.reduce((acc, curr) => acc + (curr + 1), 0);
-  };
+  }, [answers]);
 
-  const calculateCategoryScores = () => {
+  const calculateCategoryScores = useCallback(() => {
     const behavioral = answers.slice(0, 5).reduce((acc, curr) => acc + (curr + 1), 0);
     const cognitive = answers.slice(5, 10).reduce((acc, curr) => acc + (curr + 1), 0);
     const decisional = answers.slice(10, 15).reduce((acc, curr) => acc + (curr + 1), 0);
     return { behavioral, cognitive, decisional };
-  };
+  }, [answers]);
 
   const getInterpretation = (score: number) => {
     if (score >= 36) return {
@@ -185,29 +178,27 @@ export default function QuizPage() {
     };
   };
 
-  const triggerConfetti = () => {
+  const triggerConfetti = useCallback(() => {
     const duration = 3 * 1000;
     const animationEnd = Date.now() + duration;
     const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
     const randomInRange = (min: number, max: number) => Math.random() * (max - min) + min;
 
-    const interval: any = setInterval(function() {
+    const interval = setInterval(function() {
       const timeLeft = animationEnd - Date.now();
       if (timeLeft <= 0) return clearInterval(interval);
       const particleCount = 50 * (timeLeft / duration);
-      // @ts-ignore
       confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } });
-      // @ts-ignore
       confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } });
     }, 250);
-  };
+  }, []);
 
   useEffect(() => {
     if (step === 'RESULT') {
       const score = calculateTotalScore();
       if (score >= 36) triggerConfetti();
     }
-  }, [step]);
+  }, [step, calculateTotalScore, triggerConfetti]);
 
   const handleStart = (e: React.FormEvent) => {
     e.preventDefault();
@@ -235,7 +226,6 @@ export default function QuizPage() {
     try {
       setIsGeneratingPDF(true);
       
-      // @ts-ignore
       const { jsPDF } = await import('jspdf');
       
       const pdf = new jsPDF('p', 'mm', 'a4'); // Formal Portrait for table
@@ -259,10 +249,10 @@ export default function QuizPage() {
       // Student Bio
       pdf.setFontSize(12);
       pdf.setTextColor(15, 23, 42);
-      pdf.setFont(undefined, 'bold');
+      pdf.setFont('helvetica', 'bold');
       pdf.text('Informasi Siswa:', 20, 45);
       
-      pdf.setFont(undefined, 'normal');
+      pdf.setFont('helvetica', 'normal');
       pdf.text(`Nama Lengkap : ${studentName.toUpperCase()}`, 20, 52);
       pdf.text(`Kelas                : ${studentClass.toUpperCase()}`, 20, 58);
       pdf.text(`Tanggal Periksa : ${new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}`, 20, 64);
@@ -272,12 +262,12 @@ export default function QuizPage() {
       pdf.setFillColor(241, 245, 249); // Slate 100
       pdf.rect(20, tableTop, 170, 10, 'F');
       
-      pdf.setFont(undefined, 'bold');
+      pdf.setFont('helvetica', 'bold');
       pdf.text('ASPEK SELF-CONTROL', 25, tableTop + 7);
       pdf.text('SKOR', 160, tableTop + 7);
       
       // Table Content
-      pdf.setFont(undefined, 'normal');
+      pdf.setFont('helvetica', 'normal');
       const rowHeight = 10;
       
       pdf.text('1. Behavioral Control (Kontrol Perilaku)', 25, tableTop + rowHeight + 7);
@@ -295,7 +285,7 @@ export default function QuizPage() {
       // Total Score Row
       pdf.setFillColor(248, 250, 252);
       pdf.rect(20, tableTop + (rowHeight * 4), 170, 12, 'F');
-      pdf.setFont(undefined, 'bold');
+      pdf.setFont('helvetica', 'bold');
       pdf.text('TOTAL SKOR KUMULATIF', 25, tableTop + (rowHeight * 4) + 8);
       pdf.text(`${totalScore} / 45`, 160, tableTop + (rowHeight * 4) + 8);
       
@@ -312,15 +302,15 @@ export default function QuizPage() {
       
       pdf.setFontSize(11);
       pdf.setTextColor(71, 85, 105); // Slate 600
-      pdf.setFont(undefined, 'normal');
+      pdf.setFont('helvetica', 'normal');
       const splitDesc = pdf.splitTextToSize(interpretation.description, 170);
       pdf.text(splitDesc, 20, 160);
       
       // Footer / Recommendation
-      pdf.setFont(undefined, 'bold');
+      pdf.setFont('helvetica', 'bold');
       pdf.setTextColor(15, 23, 42);
       pdf.text('Saran:', 20, 185);
-      pdf.setFont(undefined, 'normal');
+      pdf.setFont('helvetica', 'normal');
       pdf.text('Game bisa ditunda, tapi masa depan tidak bisa diulang.', 20, 192);
       
       // Official stamp-like area
@@ -331,7 +321,7 @@ export default function QuizPage() {
       pdf.text('NOGAMEADDICTION', 160, 258, { align: 'center' });
       
       pdf.save(`Laporan_SelfControl_${studentName.replace(/\s+/g, '_')}.pdf`);
-    } catch (error: any) {
+    } catch (error) {
       console.error('Failed to generate PDF:', error);
       alert('Terjadi kesalahan saat membuat laporan PDF text.');
     } finally {
@@ -372,11 +362,11 @@ export default function QuizPage() {
       y: {
         beginAtZero: true,
         max: 15,
-        ticks: { color: '#94a3b8', font: { weight: 'bold' } },
+        ticks: { color: '#94a3b8', font: { weight: 'bold' as const } },
         grid: { color: 'rgba(148, 163, 184, 0.1)' }
       },
       x: {
-        ticks: { color: '#94a3b8', font: { weight: 'bold' } },
+        ticks: { color: '#94a3b8', font: { weight: 'bold' as const } },
         grid: { display: false }
       }
     },
@@ -386,15 +376,15 @@ export default function QuizPage() {
         display: true,
         text: 'Distribusi Kontrol Diri',
         color: '#f8fafc',
-        font: { size: 16, weight: 'bold' },
+        font: { size: 16, weight: 'bold' as const },
         padding: 20
       }
     },
-    animation: false,
+    animation: false as const,
   };
 
-  // Type-cast Bar component to any for usage
-  const BarChart = Bar as any;
+  // Use Bar component directly
+    const BarChart = Bar;
 
   return (
     <div className="min-h-screen bg-slate-900 pt-24 pb-12 px-4 text-white font-sans">
@@ -562,7 +552,7 @@ export default function QuizPage() {
                               />
                           </div>
                           <p className="text-slate-300 leading-relaxed text-xs md:text-sm font-medium italic mt-2 md:mt-4">
-                            "{interpretation.description}"
+                            &quot;{interpretation.description}&quot;
                           </p>
                       </div>
                   </div>
@@ -570,7 +560,7 @@ export default function QuizPage() {
                   {/* Column 2: Chart */}
                   <div className="bg-slate-900/60 p-5 md:p-6 rounded-2xl border border-white/10 flex flex-col items-center justify-center min-h-[200px] md:min-h-[280px] order-1 md:order-2">
                       <div className="w-full h-full relative">
-                          <BarChart data={chartData} options={chartOptions} />
+                          <BarChart type="bar" data={chartData} options={chartOptions} />
                       </div>
                   </div>
 
@@ -583,7 +573,7 @@ export default function QuizPage() {
                           Berdasarkan teori <strong>Averill</strong>, kendali diri melibatkan regulasi perilaku, kognisi, and keputusan. {totalScore < 36 ? "Segera batasi durasi bermain setiap harinya." : "Pertahankan kedisiplinan ini."}
                       </p>
                       <div className="mt-auto bg-slate-800/80 p-3 md:p-4 rounded-xl border border-indigo-500/10 italic text-indigo-200 text-center font-bold text-xs md:text-sm relative overflow-hidden">
-                        <span className="text-indigo-500/10 font-serif block text-center">"Game bisa ditunda, tapi masa depan tidak bisa diulang."</span>
+                        <span className="text-indigo-500/10 font-serif block text-center">&quot;Game bisa ditunda, tapi masa depan tidak bisa diulang.&quot;</span>
                       </div>
                   </div>
                 </div>

@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import SelfControlQuiz from '../components/SelfControlQuiz';
 import GamingSchedulePlanner from '../components/GamingSchedulePlanner';
@@ -90,9 +91,11 @@ const VideoGamePage = () => {
               className="bg-white rounded-[2.5rem] shadow-xl shadow-slate-200/60 border border-slate-100 overflow-hidden flex flex-col"
             >
               <div className="relative h-64 overflow-hidden">
-                <img
+                <Image
                   src={game.imageUrl}
                   alt={game.title}
+                  width={600}
+                  height={400}
                   className="w-full h-full object-cover transform transition-transform duration-500 hover:scale-110"
                 />
                 <div className="absolute top-6 left-6">
@@ -152,7 +155,7 @@ const VideoGamePage = () => {
         </div>
         
         <div className="max-w-4xl mx-auto text-center relative z-10">
-          <h2 className="text-4xl font-black mb-6 italic">"Bermain dengan Bijak, Tumbuh dengan Hebat"</h2>
+          <h2 className="text-4xl font-black mb-6 italic">&quot;Bermain dengan Bijak, Tumbuh dengan Hebat&quot;</h2>
           <p className="text-xl text-slate-400 mb-10 leading-relaxed">
             Game adalah alat belajar yang luar biasa jika Anda mampu menetapkan batas waktu. <br className="hidden md:block"/> Disiplin adalah kunci utama kemenangan sejati.
           </p>

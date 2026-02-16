@@ -92,7 +92,7 @@ export default function PembelajaranDetail2() {
             Pikiran kita seringkali memberikan alasan otomatis (distorsi kognitif) untuk terus bermain game. <strong>Reframing</strong> adalah teknik untuk membingkai ulang pikiran tersebut menjadi lebih sehat dan logis.
           </p>
           <div className="bg-slate-900 p-6 rounded-2xl text-white italic border-l-8 border-blue-500">
-            "Bukan situasi (game) yang membuat kita kehilangan kendali, tapi bagaimana kita mengartikan pikiran kita tentang situasi tersebut."
+            &quot;Bukan situasi (game) yang membuat kita kehilangan kendali, tapi bagaimana kita mengartikan pikiran kita tentang situasi tersebut.&quot;
           </div>
         </section>
 

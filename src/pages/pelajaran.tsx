@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 
 // Jika ini adalah bagian dari file index.tsx, Anda bisa memasukkannya ke dalam export default function Home()
-export default function Home() {
+export default function PelajaranPage() {
   return (
     <div className="min-h-screen bg-white">
       <Head>

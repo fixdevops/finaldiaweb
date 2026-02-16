@@ -15,7 +15,6 @@ type Question = {
 };
 
 const questions: Question[] = [
-  // ... (Data pertanyaan tetap sama seperti milikmu)
   {
     id: 1,
     question: "Saat memiliki tugas sekolah dan ingin bermain game, saya biasanya …",
@@ -28,7 +27,174 @@ const questions: Question[] = [
     correctKey: 'A',
     explanation: "Mengutamakan kewajiban menunjukkan self-control yang baik."
   },
-  // Tambahkan pertanyaan lainnya di sini...
+  {
+    id: 2,
+    question: "Jika orang tua menegur saat saya bermain game, saya …",
+    options: [
+      { key: 'A', text: "Langsung menghentikan permainan" },
+      { key: 'B', text: "Mengurangi waktu bermain" },
+      { key: 'C', text: "Menjawab dengan kesal tapi berhenti" },
+      { key: 'D', text: "Mengabaikan dan tetap bermain" }
+    ],
+    correctKey: 'A',
+    explanation: "Merespon teguran dengan bijak menunjukkan kedewasaan dalam mengendalikan tindakan."
+  },
+  {
+    id: 3,
+    question: "Ketika teman mengajak bermain game padahal ada tugas sekolah, saya …",
+    options: [
+      { key: 'A', text: "Menolak dan fokus mengerjakan tugas" },
+      { key: 'B', text: "Bermain setelah tugas selesai" },
+      { key: 'C', text: "Bermain sebentar saja" },
+      { key: 'D', text: "Selalu ikut bermain" }
+    ],
+    correctKey: 'A',
+    explanation: "Mampu memprioritaskan tugas di atas ajakan teman adalah tanda kontrol diri yang kuat."
+  },
+  {
+    id: 4,
+    question: "Dalam sehari, waktu yang saya gunakan untuk bermain game adalah …",
+    options: [
+      { key: 'A', text: "Kurang dari 1 jam" },
+      { key: 'B', text: "1–2 jam" },
+      { key: 'C', text: "3-4 jam" },
+      { key: 'D', text: "Lebih dari 4 jam" }
+    ],
+    correctKey: 'A',
+    explanation: "Manajemen waktu yang baik mencegah risiko kecanduan game online."
+  },
+  {
+    id: 5,
+    question: "Saat merasa bosan, saya …",
+    options: [
+      { key: 'A', text: "Melakukan aktivitas lain selain game" },
+      { key: 'B', text: "Kadang bermain, kadang melakukan hal lain" },
+      { key: 'C', text: "Mencari teman untuk bermain game" },
+      { key: 'D', text: "Langsung bermain game" }
+    ],
+    correctKey: 'A',
+    explanation: "Memiliki variasi aktivitas selain game membantu menjaga kesehatan mental."
+  },
+  {
+    id: 6,
+    question: "Menurut saya, bermain game berlebihan …",
+    options: [
+      { key: 'A', text: "Bisa berdampak buruk bagi sekolah dan masa depan" },
+      { key: 'B', text: "Ada dampak, tapi tidak terlalu besar" },
+      { key: 'C', text: "Hanya hiburan biasa" },
+      { key: 'D', text: "Tidak berdampak apa-apa" }
+    ],
+    correctKey: 'A',
+    explanation: "Kesadaran akan dampak negatif adalah langkah pertama untuk berubah."
+  },
+  {
+    id: 7,
+    question: "Sebelum bermain game, saya biasanya …",
+    options: [
+      { key: 'A', text: "Memikirkan kewajiban dan dampaknya terlebih dahulu" },
+      { key: 'B', text: "Kadang memikirkan tugas yang ada" },
+      { key: 'C', text: "Hanya memikirkan strategi game" },
+      { key: 'D', text: "Langsung bermain tanpa berpikir" }
+    ],
+    correctKey: 'A',
+    explanation: "Berpikir sebelum bertindak membantu kamu mengambil keputusan yang lebih logis."
+  },
+  {
+    id: 8,
+    question: "Jika nilai sekolah menurun, saya berpikir bahwa …",
+    options: [
+      { key: 'A', text: "Game bisa menjadi penyebab utama" },
+      { key: 'B', text: "Game sedikit berpengaruh" },
+      { key: 'C', text: "Mungkin karena kurang belajar saja" },
+      { key: 'D', text: "Itu bukan karena game" }
+    ],
+    correctKey: 'A',
+    explanation: "Kejujuran pada diri sendiri mengenai penyebab masalah adalah bentuk kontrol kognitif."
+  },
+  {
+    id: 9,
+    question: "Saya menganggap belajar dan masa depan saya …",
+    options: [
+      { key: 'A', text: "Lebih penting daripada game" },
+      { key: 'B', text: "Sama penting dengan game" },
+      { key: 'C', text: "Prioritas kedua setelah game" },
+      { key: 'D', text: "Kurang penting dibanding game" }
+    ],
+    correctKey: 'A',
+    explanation: "Menetapkan prioritas jangka panjang di atas kesenangan sesaat sangatlah krusial."
+  },
+  {
+    id: 10,
+    question: "Saat ingin bermain game berlebihan, saya …",
+    options: [
+      { key: 'A', text: "Mengingat dampak negatifnya" },
+      { key: 'B', text: "Ragu-ragu" },
+      { key: 'C', text: "Menunda sebentar saja" },
+      { key: 'D', text: "Menuruti keinginan tersebut" }
+    ],
+    correctKey: 'A',
+    explanation: "Mengingat konsekuensi saat muncul keinginan kuat membantu menekan impulsivitas."
+  },
+  {
+    id: 11,
+    question: "Jika saya memiliki waktu luang, saya akan …",
+    options: [
+      { key: 'A', text: "Mengatur waktu untuk hal yang lebih bermanfaat" },
+      { key: 'B', text: "Bermain game sebentar" },
+      { key: 'C', text: "Melihat konten game di media sosial" },
+      { key: 'D', text: "Menghabiskannya untuk bermain game" }
+    ],
+    correctKey: 'A',
+    explanation: "Kemampuan membuat keputusan menentukan kualitas penggunaan waktu luangmu."
+  },
+  {
+    id: 12,
+    question: "Saya membuat aturan bermain game untuk diri sendiri …",
+    options: [
+      { key: 'A', text: "Selalu berusaha konsisten" },
+      { key: 'B', text: "Kadang-kadang" },
+      { key: 'C', text: "Hanya saat dilarang orang tua" },
+      { key: 'D', text: "Tidak pernah" }
+    ],
+    correctKey: 'A',
+    explanation: "Disiplin terhadap aturan diri sendiri adalah kunci sukses dalam mengelola hobi."
+  },
+  {
+    id: 13,
+    question: "Saat harus memilih antara tugas dan game, saya …",
+    options: [
+      { key: 'A', text: "Memilih menyelesaikan tugas" },
+      { key: 'B', text: "Tergantung tingkat kesulitan tugas" },
+      { key: 'C', text: "Mengerjakan tugas sambil main game" },
+      { key: 'D', text: "Memilih game" }
+    ],
+    correctKey: 'A',
+    explanation: "Keputusan untuk menyelesaikan tanggung jawab terlebih dahulu mencerminkan kematangan diri."
+  },
+  {
+    id: 14,
+    question: "Jika sudah melewati batas waktu bermain, saya …",
+    options: [
+      { key: 'A', text: "Langsung berhenti bermain" },
+      { key: 'B', text: "Menghentikan setelah satu ronde lagi" },
+      { key: 'C', text: "Menambah waktu 15 menit saja" },
+      { key: 'D', text: "Tetap melanjutkan permainan" }
+    ],
+    correctKey: 'A',
+    explanation: "Ketegasan dalam berhenti saat waktu habis mencegah pola perilaku kompulsif."
+  },
+  {
+    id: 15,
+    question: "Saya merasa mampu mengendalikan keputusan saya dalam bermain game …",
+    options: [
+      { key: 'A', text: "Sangat mampu" },
+      { key: 'B', text: "Cukup mampu" },
+      { key: 'C', text: "Kurang mampu" },
+      { key: 'D', text: "Tidak mampu" }
+    ],
+    correctKey: 'A',
+    explanation: "Kepercayaan diri dalam mengontrol keputusan memperkuat niat untuk tetap disiplin."
+  }
 ];
 
 const SelfControlQuiz = () => {
@@ -144,7 +310,7 @@ const SelfControlQuiz = () => {
                 {calculateScore()}<span className="text-3xl text-indigo-400">/{questions.length}</span>
               </div>
               <p className="text-xl font-medium text-purple-100 italic relative z-10 max-w-md mx-auto leading-relaxed">
-                "{getEncouragement(calculateScore())}"
+                &quot;{getEncouragement(calculateScore())}&quot;
               </p>
               <button 
                 onClick={() => {
@@ -199,7 +365,7 @@ const SelfControlQuiz = () => {
                                 <span className="w-2 h-2 bg-indigo-500 rounded-full animate-pulse"></span>
                                 Penjelasan Psikologis
                             </span>
-                            <p className="text-slate-700 mt-2 leading-relaxed italic">"{q.explanation}"</p>
+                            <p className="text-slate-700 mt-2 leading-relaxed italic">&quot;{q.explanation}&quot;</p>
                          </div>
                       </div>
                     </div>
