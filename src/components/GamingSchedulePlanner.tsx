@@ -71,7 +71,7 @@ const GamingSchedulePlanner = () => {
     // Jika alarmDate < now, berarti waktu sudah lewat.
     // Namun untuk alarm "berhenti main", biasanya diset untuk beberapa jam ke depan.
     
-    let delay = alarmDate.getTime() - now.getTime();
+    const delay = alarmDate.getTime() - now.getTime();
     
     if (delay < 0) {
        alert("Waktu yang dipilih sudah lewat! Silakan pilih waktu di masa depan.");
