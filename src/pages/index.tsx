@@ -98,6 +98,47 @@ const videos = [
         </div>
       </section>
 
+      {/* Definition & Motivation Section */}
+      <section className="relative -mt-12 px-4 z-20">
+        <div className="max-w-5xl mx-auto">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="grid md:grid-cols-2 gap-0 overflow-hidden rounded-[2.5rem] shadow-2xl border border-white/20"
+          >
+            {/* Left: Definition */}
+            <div className="bg-white p-10 md:p-12">
+              <div className="flex items-center gap-3 mb-6">
+                <span className="text-3xl">🧠</span>
+                <h2 className="text-2xl font-black text-slate-800 uppercase tracking-tight">Pengertian Self-Control</h2>
+              </div>
+              <p className="text-lg text-slate-600 leading-relaxed font-medium italic">
+                "Self-control adalah kemampuan individu untuk <span className="text-indigo-600 font-bold">mengatur, mengendalikan, dan mengarahkan</span> perilaku, emosi, serta keputusan agar sesuai dengan tujuan jangka panjang."
+              </p>
+            </div>
+
+            {/* Right: Motivation */}
+            <div className="bg-indigo-600 p-10 md:p-12 text-white relative">
+              <div className="absolute top-0 right-0 p-8 opacity-10 text-9xl">🎯</div>
+              <div className="relative z-10">
+                <div className="flex items-center gap-3 mb-6">
+                  <span className="text-3xl">🎯</span>
+                  <h2 className="text-2xl font-black uppercase tracking-tight">Skill, Bukan Bakat</h2>
+                </div>
+                <p className="text-xl font-bold leading-snug mb-6">
+                  Self-control itu bukan bakat, tapi <span className="text-yellow-300">"skill yang bisa dilatih"</span>.
+                </p>
+                <div className="h-px bg-white/20 w-full mb-6"></div>
+                <p className="text-indigo-100 font-medium">
+                  Sedikit demi sedikit, kamu bisa tetap main game <span className="inline-block animate-bounce ml-1">🎮</span> tanpa kehilangan masa depanmu <span className="inline-block animate-pulse ml-1">🚀</span>.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Teknik Cards */}
       <section className="py-16 px-4 max-w-7xl mx-auto">
         <div className="grid md:grid-cols-3 gap-8">
@@ -139,15 +180,15 @@ const videos = [
       </section>
 
       {/* Section Pembelajaran */}
-      <section id="pembelajaran" className="py-24 bg-gray-50">
+      <section id="pembelajaran" className="py-20 md:py-24 bg-gray-50">
         <div className="max-w-4xl mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-extrabold text-gray-900">Materi Pembelajaran</h2>
-            <p className="text-gray-600 mt-4">Pahami langkah-langkah ini untuk kendali diri yang lebih baik.</p>
-            <div className="w-24 h-1.5 bg-blue-600 mx-auto mt-6 rounded-full"></div>
+          <div className="text-center mb-12 md:mb-16">
+            <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900">Materi Pembelajaran</h2>
+            <p className="text-gray-500 mt-4 text-sm md:text-base">Pahami langkah-langkah ini untuk kendali diri yang lebih baik.</p>
+            <div className="w-20 md:w-24 h-1.5 bg-blue-600 mx-auto mt-6 rounded-full"></div>
           </div>
 
-          <div className="space-y-10">
+          <div className="space-y-6 md:space-y-10">
             {materiLengkap.map((item, index) => (
               <motion.div 
                 key={index}
@@ -155,22 +196,22 @@ const videos = [
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className={`p-10 rounded-3xl border-2 shadow-sm ${item.warna}`}
+                className={`p-6 md:p-10 rounded-[2rem] md:rounded-3xl border-2 shadow-sm ${item.warna}`}
               >
-                <div className="flex flex-col items-center">
-                  <div className="mb-6 rounded-2xl overflow-hidden border-4 border-white shadow-lg">
+                <div className="flex flex-col items-center text-center">
+                  <div className="mb-6 rounded-2xl overflow-hidden border-4 border-white shadow-lg w-full max-w-sm mx-auto">
                     <Image 
                       src={item.imageUrl} 
                       alt={item.judul} 
                       width={400} 
                       height={250} 
-                      className="object-cover"
+                      className="w-full h-auto object-cover"
                     />
                   </div>
-                  <h3 className="text-2xl font-bold mb-3 text-gray-900">{item.judul}</h3>
-                  <p className="text-lg leading-relaxed text-gray-700 text-center mb-6">{item.deskripsiSingkat}</p>
+                  <h3 className="text-xl md:text-2xl font-bold mb-3 text-gray-900">{item.judul}</h3>
+                  <p className="text-sm md:text-lg leading-relaxed text-gray-700 mb-6">{item.deskripsiSingkat}</p>
                   <Link href={item.linkTo}>
-                    <span className="cursor-pointer bg-linear-to-r from-blue-500 to-indigo-600 text-white px-8 py-3 rounded-full font-bold shadow-lg hover:from-blue-600 hover:to-indigo-700 transition-all inline-block">
+                    <span className="cursor-pointer bg-linear-to-r from-blue-500 to-indigo-600 text-white px-8 py-3 rounded-full font-bold shadow-lg hover:from-blue-600 hover:to-indigo-700 transition-all inline-block text-sm md:text-base">
                       Pelajari Lebih Lanjut
                     </span>
                   </Link>
