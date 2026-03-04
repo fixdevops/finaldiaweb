@@ -1,14 +1,15 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import { markLessonCompleted } from '@/lib/lessonProgress';
 
 export default function PelajaranPage() {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [checkedCount, setCheckedCount] = useState(0);
+  const hasSavedCompletion = useRef(false);
 
-  // Fungsi Scroll Progress
   useEffect(() => {
     const handleScroll = () => {
       const totalScroll = document.documentElement.scrollTop;
@@ -20,117 +21,157 @@ export default function PelajaranPage() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (scrollProgress >= 95 && !hasSavedCompletion.current) {
+      markLessonCompleted(1);
+      hasSavedCompletion.current = true;
+    }
+  }, [scrollProgress]);
+
   const checklistGejala = [
-    "Merasa gelisah atau iritasi saat tidak bisa bermain game.",
-    "Mengabaikan tugas sekolah atau tanggung jawab lainnya.",
-    "Pola tidur menjadi berantakan karena begadang main game.",
-    "Kehilangan minat pada hobi lain yang dulu disukai.",
-    "Gagal mencoba membatasi waktu bermain berkali-kali.",
-    "Tetap bermain meskipun tahu hal itu merugikan kesehatan/nilai."
+    'Merasa gelisah atau iritasi saat tidak bisa bermain game.',
+    'Mengabaikan tugas sekolah atau tanggung jawab lainnya.',
+    'Pola tidur menjadi berantakan karena begadang main game.',
+    'Kehilangan minat pada hobi lain yang dulu disukai.',
+    'Gagal mencoba membatasi waktu bermain berkali-kali.',
+    'Tetap bermain meskipun tahu hal itu merugikan kesehatan/nilai.',
   ];
 
   const handleCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCheckedCount(prev => e.target.checked ? prev + 1 : prev - 1);
+    setCheckedCount((prev) => (e.target.checked ? prev + 1 : prev - 1));
   };
 
+  const isStageCompleted = scrollProgress >= 95;
+
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-slate-50 text-slate-900">
       <Head>
-        <title>Analisis Gejala & Materi - DiaWeb</title>
+        <title>Tahap 1 - Kenali Gejala Kecanduan</title>
       </Head>
 
-      {/* Progress Bar Fixed */}
-      <div className="fixed top-16 left-0 w-full h-1.5 bg-gray-100 z-50">
-        <div 
-          className="h-full bg-red-500 transition-all duration-150"
+      <div className="fixed top-16 left-0 w-full h-1.5 bg-slate-200 z-50">
+        <div
+          className="h-full bg-linear-to-r from-rose-500 to-orange-400 transition-all duration-150"
           style={{ width: `${scrollProgress}%` }}
-        ></div>
+        />
       </div>
 
-      {/* Header Halaman */}
-      <div className="bg-red-50 pt-24 pb-12 border-b">
-        <div className="max-w-7xl mx-auto px-4 text-center">
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.9 }}
+      <section className="relative overflow-hidden bg-linear-to-br from-slate-950 via-rose-950 to-slate-900 text-white pt-24 pb-16 px-4">
+        <div className="absolute -top-12 -left-20 w-72 h-72 rounded-full bg-rose-400/20 blur-3xl" />
+        <div className="absolute -bottom-16 right-0 w-72 h-72 rounded-full bg-orange-300/20 blur-3xl" />
+        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-8 items-center">
+          <div>
+            <span className="inline-flex items-center rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-black uppercase tracking-[0.2em]">
+              Tahap 01
+            </span>
+            <h1 className="mt-5 text-4xl md:text-5xl font-black leading-tight">Kenali Gejala Kecanduan</h1>
+            <p className="mt-4 text-rose-100 leading-relaxed">
+              Pahami sinyal awal kecanduan game agar kamu bisa mengambil tindakan lebih cepat dan tetap menjaga
+              fokus belajar.
+            </p>
+            <div className="mt-6 inline-flex items-center gap-2 rounded-xl bg-white/10 border border-white/20 px-4 py-2">
+              <span className="text-sm font-semibold">Progres Baca</span>
+              <span className="text-lg font-black text-rose-200">{Math.round(scrollProgress)}%</span>
+            </div>
+          </div>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="mb-8 inline-block rounded-3xl overflow-hidden shadow-2xl border-4 border-white"
+            className="rounded-[2rem] overflow-hidden border border-white/20 bg-white/5 backdrop-blur p-3 shadow-2xl"
           >
-            <Image 
-              src="/images/kecanduan-game.png" 
-              alt="Gejala Kecanduan" 
-              width={500} 
-              height={300}
-              className="object-cover"
+            <Image
+              src="/images/kecanduan-game.png"
+              alt="Gejala Kecanduan"
+              width={700}
+              height={450}
+              className="rounded-[1.4rem] w-full h-auto object-cover"
             />
           </motion.div>
-          <h1 className="text-4xl font-black text-gray-900 mb-4">Kenali Gejala Kecanduan</h1>
-          <p className="text-lg text-gray-600">Progres Membaca: <span className="font-bold text-red-600">{Math.round(scrollProgress)}%</span></p>
         </div>
-      </div>
+      </section>
 
-      {/* Checklist Section */}
-      <div className="max-w-3xl mx-auto py-16 px-4">
-        <div className="bg-white rounded-3xl p-8 border-2 border-red-100 shadow-xl mb-16">
-          <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">Self-Checklist Gejala</h2>
-          <div className="space-y-4">
+      <div className="max-w-4xl mx-auto py-12 px-4 space-y-10">
+        <div
+          className={`rounded-2xl border p-4 md:p-5 flex flex-col md:flex-row md:items-center md:justify-between gap-3 ${
+            isStageCompleted
+              ? 'bg-emerald-50 border-emerald-200 text-emerald-800'
+              : 'bg-amber-50 border-amber-200 text-amber-800'
+          }`}
+        >
+          <p className="font-semibold">
+            {isStageCompleted
+              ? 'Tahap 1 selesai dan progres sudah tersimpan.'
+              : 'Baca hingga bawah halaman (95%) untuk menandai tahap ini selesai.'}
+          </p>
+          <span className="text-sm font-black uppercase tracking-wider">
+            {isStageCompleted ? 'Selesai' : 'Belum selesai'}
+          </span>
+        </div>
+
+        <section className="rounded-[2rem] border border-rose-100 bg-white p-6 md:p-8 shadow-xl shadow-rose-100/50">
+          <h2 className="text-2xl font-black text-slate-900 text-center">Self-Checklist Gejala</h2>
+          <p className="text-center text-slate-500 mt-2">Centang gejala yang pernah kamu alami.</p>
+
+          <div className="mt-8 space-y-3">
             {checklistGejala.map((gejala, index) => (
-              <label key={index} className="flex items-center p-4 rounded-xl bg-gray-50 hover:bg-red-50 transition-colors cursor-pointer border border-transparent hover:border-red-200 group">
-                <input 
-                  type="checkbox" 
+              <label
+                key={index}
+                className="flex items-start gap-3 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 hover:border-rose-200 hover:bg-rose-50 transition-colors cursor-pointer"
+              >
+                <input
+                  type="checkbox"
                   onChange={handleCheck}
-                  className="w-5 h-5 text-red-600 rounded focus:ring-red-500" 
+                  className="mt-1 w-5 h-5 text-rose-600 rounded focus:ring-rose-500"
                 />
-                <span className="ml-4 text-gray-700 font-medium">{gejala}</span>
+                <span className="text-slate-700 font-medium">{gejala}</span>
               </label>
             ))}
           </div>
-          
-          <div className="mt-8 p-6 bg-slate-900 rounded-2xl text-white text-center">
-            <p className="text-sm opacity-70 uppercase tracking-widest mb-1">Skor Kesadaran Diri</p>
-            <div className="text-5xl font-black text-red-500 mb-2">{checkedCount}/6</div>
-            <p className="font-medium text-slate-300">
-              {checkedCount >= 4 ? "Sangat Berisiko! Segera terapkan teknik pembatasan." : "Waspada dan tetap kontrol diri kamu."}
+
+          <div className="mt-8 rounded-2xl bg-slate-950 text-white p-6 text-center">
+            <p className="text-xs uppercase tracking-[0.2em] text-rose-300 font-bold">Skor Kesadaran Diri</p>
+            <p className="mt-2 text-5xl font-black text-rose-400">{checkedCount}/6</p>
+            <p className="mt-2 text-slate-300">
+              {checkedCount >= 4 ? 'Risiko tinggi. Mulai batasi durasi bermain dari sekarang.' : 'Tetap waspada dan jaga kontrol diri.'}
             </p>
           </div>
-        </div>
+        </section>
 
-        {/* Konten Tambahan */}
-        <div className="space-y-12">
-          <section>
-            <h3 className="text-2xl font-bold text-gray-800 mb-4 flex items-center">
-              <span className="mr-3">🧠</span> Apa yang Terjadi pada Otak?
-            </h3>
-            <p className="text-gray-600 leading-relaxed text-lg">
-              Saat bermain game secara berlebihan, otak melepaskan dopamin yang memicu rasa senang instan. Namun, paparan terus-menerus membuat reseptor otak tumpul, sehingga kamu butuh waktu bermain lebih lama hanya untuk merasa &quot;normal&quot;.
-            </p>
-          </section>
+        <section className="rounded-[2rem] border border-slate-200 bg-white p-6 md:p-8">
+          <h3 className="text-2xl font-black text-slate-900 flex items-center gap-3">
+            <span>🧠</span> Apa yang Terjadi pada Otak?
+          </h3>
+          <p className="mt-4 text-slate-600 leading-relaxed text-lg">
+            Saat bermain game secara berlebihan, otak melepaskan dopamin yang memicu rasa senang instan. Paparan
+            terus-menerus membuat reseptor otak tumpul, sehingga kamu butuh waktu bermain lebih lama hanya untuk
+            merasa normal.
+          </p>
+        </section>
 
-          <section className="bg-blue-50 p-8 rounded-3xl border-2 border-blue-100">
-            <h3 className="text-2xl font-bold text-blue-900 mb-4">Tips Cepat Memutus Siklus:</h3>
-            <ul className="space-y-3 text-blue-800">
-              <li className="flex items-center gap-3">✅ Gunakan alarm fisik saat mulai bermain.</li>
-              <li className="flex items-center gap-3">✅ Jangan bermain di dalam kamar tidur.</li>
-              <li className="flex items-center gap-3">✅ Cari aktivitas fisik minimal 15 menit/hari.</li>
-            </ul>
-          </section>
-        </div>
+        <section className="rounded-[2rem] bg-linear-to-br from-sky-600 to-blue-700 text-white p-6 md:p-8 shadow-xl shadow-blue-200/70">
+          <h3 className="text-2xl font-black">Tips Cepat Memutus Siklus</h3>
+          <ul className="mt-5 space-y-3">
+            <li className="rounded-xl bg-white/10 border border-white/20 px-4 py-3">✅ Gunakan alarm fisik saat mulai bermain.</li>
+            <li className="rounded-xl bg-white/10 border border-white/20 px-4 py-3">✅ Jangan bermain di dalam kamar tidur.</li>
+            <li className="rounded-xl bg-white/10 border border-white/20 px-4 py-3">✅ Cari aktivitas fisik minimal 15 menit/hari.</li>
+          </ul>
+        </section>
 
-        {/* Footer Action */}
-        <div className="mt-20 text-center border-t pt-10">
-          <p className="text-gray-500 mb-8">Sudah paham gejalanya? Uji pemahamanmu sekarang!</p>
+        <section className="rounded-[2rem] border border-slate-200 bg-white p-6 md:p-8 text-center">
+          <p className="text-slate-500 mb-6">Jika sudah paham, lanjutkan ke Tahap 2.</p>
           <Link href="/PembelajaranDetail2">
-            <motion.button 
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="bg-red-600 text-white px-12 py-4 rounded-2xl font-bold shadow-xl shadow-red-200 hover:bg-red-700 transition-all"
+            <motion.button
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              className="bg-slate-900 hover:bg-slate-800 text-white px-10 py-4 rounded-xl font-black transition-colors"
             >
               Lanjut ke Pembelajaran Tahap 2
             </motion.button>
           </Link>
-        </div>
+        </section>
       </div>
 
-      <footer className="py-12 text-center text-gray-400">
+      <footer className="py-12 text-center text-slate-500 border-t border-slate-200">
         DiaWeb Edukasi © 2026
       </footer>
     </div>

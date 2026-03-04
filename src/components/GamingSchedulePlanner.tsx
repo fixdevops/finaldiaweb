@@ -12,7 +12,7 @@ type ScheduleItem = {
 const Icons = {
   Game: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12h4m-2-2v4m10-2h.01"/></svg>,
   Study: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>,
-  Rest: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6"><path d="M12.35 2.15a.5.5 0 0 0-.7 0l-2 2a.5.5 0 0 0-.15.35V5a.5.5 0 1 1-1 0 0 0 0 .5.5 1.7 1.7 0 1 1 2.399-2.274l.026.024zM12 7a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5V7zM4.93 12.07a.5.5 0 0 1 .7 0l4 4a.5.5 0 0 1-.7.7l-4-4a.5.5 0 0 1 0-.7z"/></svg>,
+  Rest: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6"><path d="M17 8h1a4 4 0 1 1 0 8h-1M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4ZV8zM6 2v4M10 2v4M14 2v4"/></svg>,
   School: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6"><path d="M3 21h18M5 21V7l8-4 8 4v14M8 21v-8a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v8"/></svg>,
   Family: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>,
   Sun: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6"><circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72 1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>,
@@ -46,6 +46,7 @@ const GamingSchedulePlanner = () => {
   const [activeTab, setActiveTab] = useState<'school' | 'holiday'>('school');
   const [alarmTime, setAlarmTime] = useState<string>('');
   const [isAlarmSet, setIsAlarmSet] = useState(false);
+  const [showAlarmPopup, setShowAlarmPopup] = useState(false); // new popup state
 
   const currentSchedule = activeTab === 'school' ? schoolDaySchedule : holidaySchedule;
 
@@ -92,7 +93,10 @@ const GamingSchedulePlanner = () => {
     setTimeout(() => {
        playSound();
        showNotification();
+       // show popup for a few seconds
+       setShowAlarmPopup(true);
        setIsAlarmSet(false);
+       setTimeout(() => setShowAlarmPopup(false), 8000);
     }, delay);
   };
 
@@ -226,6 +230,22 @@ const GamingSchedulePlanner = () => {
               </button>
           </div>
        </div>
+
+      {/* alarm popup overlay */}
+      {showAlarmPopup && (
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+          <div className="bg-white rounded-2xl p-8 max-w-sm text-center shadow-2xl">
+            <h2 className="text-2xl font-black text-red-600 mb-4">⏰ Waktu Selesai!</h2>
+            <p className="text-slate-700 mb-6">Saatnya berhenti bermain dan lakukan aktivitas selanjutnya.</p>
+            <button
+              onClick={() => setShowAlarmPopup(false)}
+              className="px-6 py-2 bg-red-500 text-white rounded-lg font-bold hover:bg-red-600 transition"
+            >
+              Tutup
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Timeline */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
